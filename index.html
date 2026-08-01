@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>For Haru 🌸</title>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Nunito:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      min-height: 100vh;
+      background-color: #f5c6d0;
+      background-image:
+        repeating-linear-gradient(0deg,   transparent, transparent 38px, rgba(255,255,255,0.55) 38px, rgba(255,255,255,0.55) 40px),
+        repeating-linear-gradient(90deg,  transparent, transparent 38px, rgba(255,255,255,0.55) 38px, rgba(255,255,255,0.55) 40px);
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+
+    /* ── FLOWER CORNER ── */
+    .flower {
+      position: fixed; top: 12px; right: 16px;
+      font-size: 4.5rem; line-height: 1;
+      filter: drop-shadow(2px 4px 8px rgba(180,60,80,0.25));
+      pointer-events: none; z-index: 10;
+      transform: rotate(15deg);
+    }
+
+    /* ── SCREENS ── */
+    .screen {
+      display: none;
+      flex-direction: column; align-items: center; justify-content: center;
+      width: 100vw; min-height: 100vh;
+      animation: fadeIn 0.5s ease;
+    }
+    .screen.active { display: flex; }
+    @keyframes fadeIn { from{opacity:0; transform:translateY(12px);} to{opacity:1; transform:translateY(0);} }
+
+    /* ── TORN PAPER CARD ── */
+    .card {
+      background: #fdf0f3;
+      border-radius: 4px;
+      padding: 44px 48px 52px;
+      max-width: 480px; width: 90%;
+      position: relative;
+      box-shadow: 0 6px 32px rgba(160,40,60,0.13);
+      text-align: center;
+    }
+    /* torn top edge */
+    .card::before {
+      content: '';
+      position: absolute; top: -14px; left: 0; right: 0; height: 18px;
+      background: #fdf0f3;
+      clip-path: polygon(0% 100%, 2% 20%, 5% 80%, 8% 10%, 11% 70%, 14% 5%, 17% 65%, 20% 15%, 23% 75%, 26% 8%, 29% 68%, 32% 12%, 35% 72%, 38% 6%, 41% 66%, 44% 18%, 47% 78%, 50% 4%, 53% 64%, 56% 20%, 59% 80%, 62% 10%, 65% 70%, 68% 5%, 71% 65%, 74% 15%, 77% 75%, 80% 8%, 83% 68%, 86% 12%, 89% 72%, 92% 6%, 95% 66%, 98% 18%, 100% 100%);
+    }
+    /* torn bottom edge */
+    .card::after {
+      content: '';
+      position: absolute; bottom: -14px; left: 0; right: 0; height: 18px;
+      background: #fdf0f3;
+      clip-path: polygon(0% 0%, 2% 80%, 5% 20%, 8% 90%, 11% 30%, 14% 95%, 17% 35%, 20% 85%, 23% 25%, 26% 92%, 29% 32%, 32% 88%, 35% 28%, 38% 94%, 41% 34%, 44% 82%, 47% 22%, 50% 96%, 53% 36%, 56% 80%, 59% 20%, 62% 90%, 65% 30%, 68% 95%, 71% 35%, 74% 85%, 77% 25%, 80% 92%, 83% 32%, 86% 88%, 89% 28%, 92% 94%, 95% 34%, 98% 82%, 100% 0%);
+    }
+
+    /* ── TYPOGRAPHY ── */
+    .big-text {
+      font-family: 'Caveat', cursive;
+      font-size: clamp(2rem, 6vw, 3rem);
+      color: #b5334a;
+      line-height: 1.3;
+      margin-bottom: 28px;
+    }
+    .small-tag {
+      font-family: 'Caveat', cursive;
+      font-size: 1rem; color: #c0607a;
+      margin-bottom: 10px; letter-spacing: 1px;
+    }
+
+    /* ── STICKER ── */
+    .sticker {
+      font-size: 5rem;
+      margin: 8px 0 16px;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+      animation: wiggle 3s ease-in-out infinite;
+    }
+    @keyframes wiggle {
+      0%,100%{transform:rotate(-4deg);}
+      50%{transform:rotate(4deg);}
+    }
+    .sticker2 { animation-delay: -1.5s; }
+
+    /* ── BUTTONS ── */
+    .btn-row { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-top: 8px; }
+
+    .btn {
+      font-family: 'Caveat', cursive;
+      font-size: 1.3rem;
+      background: #fdf0f3;
+      color: #b5334a;
+      border: 2px solid #d4849a;
+      border-radius: 6px;
+      padding: 8px 32px;
+      cursor: pointer;
+      box-shadow: 3px 3px 0 #d4849a;
+      transition: transform 0.15s, box-shadow 0.15s;
+      position: relative;
+    }
+    .btn:hover { transform: translate(-2px,-2px); box-shadow: 5px 5px 0 #d4849a; }
+    .btn:active { transform: translate(1px,1px); box-shadow: 1px 1px 0 #d4849a; }
+    .btn.no-btn { transition: all 0.3s ease; }
+
+    /* ── ENVELOPES ── */
+    .env-grid {
+      display: flex; flex-wrap: wrap;
+      justify-content: center; gap: 20px;
+      max-width: 520px; margin: 0 auto 8px;
+    }
+    .env-wrap { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .env-label { font-family: 'Caveat', cursive; font-size: 0.85rem; color: #b5334a; text-align: center; max-width: 110px; }
+
+    .envelope {
+      width: 110px; height: 80px;
+      background: #7a2d4a;
+      border-radius: 6px;
+      position: relative; cursor: pointer;
+      transition: transform 0.3s;
+      box-shadow: 0 4px 14px rgba(120,30,60,0.25);
+    }
+    .envelope:hover { transform: translateY(-4px) scale(1.05); }
+    /* flap */
+    .envelope::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 0; border-left: 55px solid transparent;
+      border-right: 55px solid transparent;
+      border-top: 36px solid #9b3d5e;
+      transition: transform 0.4s;
+      transform-origin: top center;
+    }
+    .envelope.open::before { transform: rotateX(180deg); }
+    /* bottom triangle */
+    .envelope::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 0; border-left: 55px solid transparent;
+      border-right: 55px solid transparent;
+      border-bottom: 36px solid #6b2540;
+    }
+    .env-tag {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+      background: #fdf0f3; border-radius: 4px;
+      padding: 3px 10px; z-index: 2;
+      font-family: 'Caveat', cursive; font-size: 0.78rem; color: #7a2d4a;
+      white-space: nowrap;
+    }
+
+    /* Message popup */
+    .msg-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(80,10,30,0.6); z-index: 999;
+      align-items: center; justify-content: center;
+      backdrop-filter: blur(4px);
+    }
+    .msg-overlay.on { display: flex; }
+    .msg-box {
+      background: #fdf0f3; border-radius: 16px;
+      padding: 40px 36px; max-width: 380px; width: 88%;
+      text-align: center; position: relative;
+      box-shadow: 0 16px 48px rgba(80,10,30,0.3);
+      animation: pop 0.3s cubic-bezier(.22,.68,0,1.3);
+    }
+    @keyframes pop { from{transform:scale(0.7);opacity:0;} to{transform:scale(1);opacity:1;} }
+    .msg-title { font-family: 'Caveat', cursive; font-size: 1.1rem; color: #c0607a; margin-bottom: 12px; }
+    .msg-text { font-family: 'Caveat', cursive; font-size: 1.5rem; color: #7a2d4a; line-height: 1.5; }
+    .msg-close {
+      margin-top: 24px; font-family: 'Caveat', cursive;
+      font-size: 1.1rem; color: #b5334a; cursor: pointer;
+      border: 1.5px solid #d4849a; border-radius: 6px;
+      padding: 6px 24px; background: none;
+      box-shadow: 2px 2px 0 #d4849a;
+    }
+    .msg-close:hover { background: #fce4ec; }
+
+    /* ── FINAL LETTER ── */
+    .final-letter {
+      background: #fdf0f3; border-radius: 4px;
+      padding: 44px 44px 52px; max-width: 520px; width: 90%;
+      position: relative;
+      box-shadow: 0 6px 32px rgba(160,40,60,0.13);
+    }
+    .final-letter::before {
+      content: '';
+      position: absolute; top: -14px; left: 0; right: 0; height: 18px;
+      background: #fdf0f3;
+      clip-path: polygon(0% 100%, 2% 20%, 5% 80%, 8% 10%, 11% 70%, 14% 5%, 17% 65%, 20% 15%, 23% 75%, 26% 8%, 29% 68%, 32% 12%, 35% 72%, 38% 6%, 41% 66%, 44% 18%, 47% 78%, 50% 4%, 53% 64%, 56% 20%, 59% 80%, 62% 10%, 65% 70%, 68% 5%, 71% 65%, 74% 15%, 77% 75%, 80% 8%, 83% 68%, 86% 12%, 89% 72%, 92% 6%, 95% 66%, 98% 18%, 100% 100%);
+    }
+    .final-letter::after {
+      content: '';
+      position: absolute; bottom: -14px; left: 0; right: 0; height: 18px;
+      background: #fdf0f3;
+      clip-path: polygon(0% 0%, 2% 80%, 5% 20%, 8% 90%, 11% 30%, 14% 95%, 17% 35%, 20% 85%, 23% 25%, 26% 92%, 29% 32%, 32% 88%, 35% 28%, 38% 94%, 41% 34%, 44% 82%, 47% 22%, 50% 96%, 53% 36%, 56% 80%, 59% 20%, 62% 90%, 65% 30%, 68% 95%, 71% 35%, 74% 85%, 77% 25%, 80% 92%, 83% 32%, 86% 88%, 89% 28%, 92% 94%, 95% 34%, 98% 82%, 100% 0%);
+    }
+    .final-letter p {
+      font-family: 'Caveat', cursive;
+      font-size: 1.45rem; color: #7a2d4a;
+      line-height: 1.8; margin-bottom: 20px;
+    }
+    .final-letter .sign {
+      font-family: 'Caveat', cursive;
+      font-size: 1.6rem; color: #b5334a; font-weight: 700;
+    }
+
+    /* ── PHOTOS ── */
+    .photo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 16px 0 24px;
+    }
+    .polaroid {
+      background: #fff;
+      padding: 10px 10px 28px;
+      box-shadow: 2px 4px 14px rgba(120,30,60,0.18);
+      transform: rotate(var(--r));
+      transition: transform 0.2s;
+    }
+    .polaroid:hover { transform: rotate(0deg) scale(1.04); }
+    .polaroid img {
+      width: 100%; aspect-ratio: 1;
+      object-fit: cover; display: block;
+    }
+    .polaroid-label {
+      font-family: 'Caveat', cursive;
+      font-size: 0.85rem; color: #b5334a;
+      text-align: center; margin-top: 6px;
+    }
+
+    /* confetti */
+    .cp { position:fixed; pointer-events:none; z-index:9999; border-radius:2px; animation:cf 2.5s ease-in forwards; }
+    @keyframes cf { 0%{transform:translateY(0) rotate(0deg);opacity:1;} 100%{transform:translateY(110vh) rotate(720deg);opacity:0;} }
+  </style>
+</head>
+<body>
+
+  <div class="flower">🌸</div>
+
+  <!-- ── SCREEN 1 ── -->
+  <div class="screen active" id="s1">
+    <div class="card">
+      <div class="small-tag">psst, Haru...</div>
+      <div class="big-text">I made<br/>something for<br/>you 🎀</div>
+      <img src="stickers/images (1).jpeg" style="height:110px;margin:8px 0 16px;filter:drop-shadow(0 4px 8px rgba(0,0,0,0.1));animation:wiggle 3s ease-in-out infinite;"/>
+      <div class="btn-row">
+        <button class="btn" onclick="go('s2')">what?</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SCREEN 2 ── -->
+  <div class="screen" id="s2">
+    <div class="card">
+      <div class="big-text">Will you<br/>see it? 🥺</div>
+      <img src="stickers/059f616cdb587d2d2d48bb88ae9a7365.jpg" style="height:110px;margin:8px 0 16px;filter:drop-shadow(0 4px 8px rgba(0,0,0,0.1));animation:wiggle 3s ease-in-out infinite;animation-delay:-1.5s;"/>
+      <div class="btn-row">
+        <button class="btn" onclick="go('s4')">yes</button>
+        <button class="btn no-btn" id="noBtn" onmouseover="runAway()" onclick="go('s3')">no</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SCREEN 3 (if they click no) ── -->
+  <div class="screen" id="s3">
+    <div class="card">
+      <div class="big-text">please say<br/>yes! 🙏</div>
+      <img src="stickers/e1fb2a070b352ab435d5fdfba80f2761.jpg" style="height:110px;margin:8px 0 16px;filter:drop-shadow(0 4px 8px rgba(0,0,0,0.1));animation:wiggle 3s ease-in-out infinite;"/>
+      <div class="btn-row">
+        <button class="btn" onclick="go('s4')">fine 🙄</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SCREEN 4 ── -->
+  <div class="screen" id="s4">
+    <div class="card">
+      <div class="small-tag">YAY! 🎉</div>
+      <div class="big-text">are you ready<br/>for the<br/>surprise? 🎁</div>
+      <img src="stickers/7f700a8c103295f6add8efa3a858f595.jpg" style="height:110px;margin:8px 0 16px;filter:drop-shadow(0 4px 8px rgba(0,0,0,0.1));animation:wiggle 3s ease-in-out infinite;animation-delay:-1.5s;"/>
+      <div class="btn-row">
+        <button class="btn" onclick="go('s5'); boom()">yes!!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SCREEN 5 — ENVELOPES ── -->
+  <div class="screen" id="s5">
+    <div class="card" style="padding:44px 52px 60px; max-width:660px;">
+      <div class="small-tag" style="font-size:1.3rem;">open each one 💌</div>
+      <div class="big-text" style="font-size:2.4rem; margin-bottom:24px;">little notes<br/>for you</div>
+      <div class="env-grid">
+        <div class="env-wrap">
+          <div class="envelope" style="width:130px;height:95px;" onclick="openMsg(this, 'reason to smile 🌸', 'You are the reason I smile on my worst days. No one gets me like you do.')">
+            <div class="env-tag" style="font-size:0.9rem;">reason to smile</div>
+          </div>
+        </div>
+        <div class="env-wrap">
+          <div class="envelope" style="width:130px;height:95px;" onclick="openMsg(this, 'you to me 💕', 'You are my safe place, my chaos partner, and my favourite person all at once.')">
+            <div class="env-tag" style="font-size:0.9rem;">you to me</div>
+          </div>
+        </div>
+        <div class="env-wrap">
+          <div class="envelope" style="width:130px;height:95px;" onclick="openMsg(this, 'forever 🎀', 'Since class 7th and forever after — I choose you as my best friend every single day.')">
+            <div class="env-tag" style="font-size:0.9rem;">forever</div>
+          </div>
+        </div>
+        <div class="env-wrap">
+          <div class="envelope" style="width:130px;height:95px;" onclick="openMsg(this, 'you make me 🤣', 'You make me laugh so hard I forget everything that was bothering me. That is a superpower.')">
+            <div class="env-tag" style="font-size:0.9rem;">you make me</div>
+          </div>
+        </div>
+        <div class="env-wrap">
+          <div class="envelope" style="width:130px;height:95px;" onclick="openMsg(this, 'promise 🫂', 'I promise to always be there — for the big things, the small things, and all the random things.')">
+            <div class="env-tag" style="font-size:0.9rem;">promise</div>
+          </div>
+        </div>
+        <div class="env-wrap">
+          <div class="envelope" style="width:130px;height:95px;" onclick="openMsg(this, 'us forever 🌈', 'No matter where life takes us, we will always find our way back to each other. That is just us.')">
+            <div class="env-tag" style="font-size:0.9rem;">us forever</div>
+          </div>
+        </div>
+      </div>
+      <div class="btn-row" style="margin-top:28px;">
+        <button class="btn" style="font-size:1.5rem; padding:10px 40px;" onclick="go('s5b')">one more thing →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SCREEN 5b — PHOTOS ── -->
+  <div class="screen" id="s5b">
+    <div class="card" style="padding:36px 32px 52px;">
+      <div class="small-tag">us 📸</div>
+      <div class="big-text" style="font-size:1.8rem; margin-bottom:16px;">look how cute we are 💕</div>
+      <div class="photo-grid">
+        <div class="polaroid" style="--r:-3deg">
+          <img src="photos/WhatsApp Image 2026-08-01 at 10.27.50 PM.jpeg" alt="memory"/>
+          <div class="polaroid-label">besties 💕</div>
+        </div>
+        <div class="polaroid" style="--r:2deg">
+          <img src="photos/WhatsApp Image 2026-08-01 at 10.27.51 PM.jpeg" alt="memory"/>
+          <div class="polaroid-label">always us 🌸</div>
+        </div>
+        <div class="polaroid" style="--r:-2deg">
+          <img src="photos/WhatsApp Image 2026-08-01 at 10.27.51 PM (1).jpeg" alt="memory"/>
+          <div class="polaroid-label">forever 🎀</div>
+        </div>
+        <div class="polaroid" style="--r:3deg">
+          <img src="photos/WhatsApp Image 2026-08-01 at 10.27.51 PM (2).jpeg" alt="memory"/>
+          <div class="polaroid-label">my fav 🐱</div>
+        </div>
+      </div>
+      <div class="btn-row">
+        <button class="btn" onclick="go('s6')">last thing →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SCREEN 6 — FINAL LETTER ── -->
+  <div class="screen" id="s6">
+    <div class="final-letter">
+      <p>
+        Haru, if you're reading this — happy friendship day to my absolute favourite person. 🌸
+        <br/><br/>
+        Since class 7th, you've been my person through everything. The laughs, the chaos, the late nights, the random conversations that somehow fix everything.
+        <br/><br/>
+        I don't say it enough, but I'm so lucky it's you. Here's to forever more years of us. 🥂
+      </p>
+      <div class="sign">— Snigy 💕</div>
+      <div class="btn-row" style="margin-top:28px;">
+        <button class="btn" onclick="boom(); boom()">🎉 celebrate us!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Message popup -->
+  <div class="msg-overlay" id="msgOverlay" onclick="closeMsg()">
+    <div class="msg-box" onclick="event.stopPropagation()">
+      <div class="msg-title" id="msgTitle"></div>
+      <div class="msg-text" id="msgText"></div>
+      <button class="msg-close" onclick="closeMsg()">close 💕</button>
+    </div>
+  </div>
+
+  <script>
+    function go(id) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+
+    // "no" button runs away on hover
+    let running = false;
+    function runAway() {
+      if (running) return; running = true;
+      const btn = document.getElementById('noBtn');
+      const maxX = window.innerWidth - 120, maxY = window.innerHeight - 60;
+      btn.style.position = 'fixed';
+      btn.style.left = Math.random() * maxX + 'px';
+      btn.style.top  = Math.random() * maxY + 'px';
+      setTimeout(() => { running = false; }, 600);
+    }
+
+    function openMsg(el, title, text) {
+      el.classList.add('open');
+      document.getElementById('msgTitle').textContent = title;
+      document.getElementById('msgText').textContent  = text;
+      document.getElementById('msgOverlay').classList.add('on');
+    }
+    function closeMsg() { document.getElementById('msgOverlay').classList.remove('on'); }
+
+    const cols = ['#f472b6','#fbcfe8','#fde68a','#c4b5fd','#6ee7b7','#fca5a5','#fff','#a5f3fc'];
+    function boom() {
+      for (let i = 0; i < 90; i++) {
+        const c = document.createElement('div');
+        c.className = 'cp';
+        const s = 6 + Math.random() * 10;
+        c.style.cssText = `left:${10+Math.random()*80}vw;top:${20+Math.random()*40}vh;width:${s}px;height:${s}px;background:${cols[Math.floor(Math.random()*cols.length)]};border-radius:${Math.random()>.4?'50%':'3px'};animation-duration:${1.8+Math.random()*1.5}s;animation-delay:${Math.random()*.4}s`;
+        document.body.appendChild(c);
+        setTimeout(() => c.remove(), 3500);
+      }
+    }
+  </script>
+</body>
+</html>

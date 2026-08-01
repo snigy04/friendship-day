@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Friendship Quiz 🧠</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@400;700&display=swap');
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #e0d4ff, #d4f1f9, #ffd6e7);
+      background-size: 400% 400%;
+      animation: bgShift 8s ease infinite;
+      font-family: 'Nunito', sans-serif;
+      display: flex; flex-direction: column; align-items: center;
+      overflow-x: hidden;
+    }
+    @keyframes bgShift {
+      0%{background-position:0% 50%;} 50%{background-position:100% 50%;} 100%{background-position:0% 50%;}
+    }
+
+    .back-btn {
+      align-self: flex-start; margin: 24px 0 0 24px;
+      text-decoration: none; background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(8px); color: #7c3aed; font-weight: 700;
+      padding: 8px 20px; border-radius: 50px; font-size: 0.9rem;
+      border: 2px solid #c4b5fd; transition: transform 0.2s; z-index: 1;
+    }
+    .back-btn:hover { transform: scale(1.05); }
+
+    h1 {
+      font-family: 'Pacifico', cursive; color: #7c3aed;
+      font-size: clamp(1.8rem, 5vw, 3rem); text-align: center;
+      margin: 36px 20px 8px; text-shadow: 2px 2px 0 #c4b5fd; z-index: 1;
+    }
+    .sub { color: #5b4a7a; font-size: 1rem; margin-bottom: 36px; text-align: center; z-index: 1; }
+
+    .quiz-box {
+      background: rgba(255,255,255,0.8); backdrop-filter: blur(10px);
+      border-radius: 28px; max-width: 540px; width: calc(100% - 48px);
+      padding: 36px; box-shadow: 0 10px 40px rgba(124,58,237,0.15);
+      border: 2px solid rgba(196,181,253,0.5); z-index: 1; margin-bottom: 40px;
+    }
+
+    .progress { font-size: 0.82rem; color: #9d7fc7; margin-bottom: 6px; }
+    .progress-bar { height: 6px; background: #ede9fe; border-radius: 10px; margin-bottom: 24px; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg,#a78bfa,#7c3aed); border-radius: 10px; transition: width 0.4s; }
+
+    .question { font-size: 1.1rem; font-weight: 700; color: #3b1f6e; margin-bottom: 20px; line-height: 1.5; }
+
+    .options { display: flex; flex-direction: column; gap: 12px; }
+    .opt {
+      background: rgba(237,233,254,0.6); border: 2px solid #c4b5fd;
+      border-radius: 14px; padding: 12px 18px; cursor: pointer;
+      font-family: 'Nunito', sans-serif; font-size: 0.95rem; color: #3b1f6e;
+      text-align: left; transition: transform 0.2s, background 0.2s;
+    }
+    .opt:hover:not(:disabled) { transform: translateX(4px); background: rgba(167,139,250,0.2); }
+    .opt.correct { background: #d1fae5; border-color: #34d399; color: #065f46; }
+    .opt.wrong   { background: #fee2e2; border-color: #f87171; color: #991b1b; }
+    .opt:disabled { cursor: default; }
+
+    .feedback { margin-top: 18px; font-size: 0.95rem; font-weight: 700; min-height: 24px; color: #7c3aed; }
+
+    .next-btn {
+      margin-top: 22px; background: linear-gradient(135deg, #a78bfa, #7c3aed);
+      color: white; border: none; padding: 12px 32px; border-radius: 50px;
+      font-family: 'Nunito', sans-serif; font-size: 1rem; font-weight: 700;
+      cursor: pointer; box-shadow: 0 6px 20px rgba(124,58,237,0.3);
+      transition: transform 0.2s; display: none;
+    }
+    .next-btn:hover { transform: scale(1.05); }
+
+    .result { text-align: center; display: none; }
+    .result .score { font-family: 'Pacifico', cursive; font-size: 3.5rem; color: #7c3aed; }
+    .result .msg { font-size: 1.1rem; color: #5b4a7a; margin-top: 12px; line-height: 1.6; }
+    .result .emoji { font-size: 3rem; margin: 16px 0; }
+
+    footer { color: #9d7fc7; font-size: 0.82rem; margin-bottom: 30px; z-index: 1; }
+  </style>
+</head>
+<body>
+
+  <a href="index.html" class="back-btn">← Back Home</a>
+  <h1>Friendship Quiz 🧠</h1>
+  <p class="sub">How well do you know your bestie? Let's find out! 💜</p>
+
+  <div class="quiz-box">
+    <div id="quiz-area">
+      <div class="progress" id="prog-text">Question 1 of 6</div>
+      <div class="progress-bar"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
+      <div class="question" id="question"></div>
+      <div class="options" id="options"></div>
+      <div class="feedback" id="feedback"></div>
+      <button class="next-btn" id="next-btn" onclick="nextQ()">Next →</button>
+    </div>
+    <div class="result" id="result">
+      <div class="emoji" id="res-emoji"></div>
+      <div class="score" id="res-score"></div>
+      <div class="msg" id="res-msg"></div>
+      <button class="next-btn" style="display:block;margin:24px auto 0" onclick="restart()">Try Again 🔄</button>
+    </div>
+  </div>
+
+  <footer>Made with 💖 just for Haru · Friendship Day</footer>
+
+  <script>
+    const qs = [
+      { q: "What year did we become friends?", opts: ["Class 5th", "Class 7th", "Class 9th", "Class 10th"], ans: 1 },
+      { q: "What's my favourite thing to do when I'm stressed?", opts: ["Sleep", "Eat snacks", "Listen to music", "Call you 😂"], ans: 3 },
+      { q: "Which word best describes our friendship?", opts: ["Chaotic", "Boring", "Perfect", "Chaotic & Perfect"], ans: 3 },
+      { q: "What do we always end up doing when we meet?", opts: ["Study", "Laugh until we cry", "Watch movies silently", "Go shopping"], ans: 1 },
+      { q: "How many years of friendship are we celebrating?", opts: ["3 years", "5 years", "Since class 7th till now!", "Forever & counting"], ans: 3 },
+      { q: "What's the most accurate description of me?", opts: ["Mysterious", "Your biggest fan 💕", "Just okay", "A little chaotic but loveable"], ans: 3 },
+    ];
+
+    let cur = 0, score = 0, answered = false;
+
+    function load() {
+      answered = false;
+      const q = qs[cur];
+      document.getElementById('prog-text').textContent = `Question ${cur+1} of ${qs.length}`;
+      document.getElementById('prog-fill').style.width = (cur / qs.length * 100) + '%';
+      document.getElementById('question').textContent = q.q;
+      document.getElementById('feedback').textContent = '';
+      document.getElementById('next-btn').style.display = 'none';
+      const opts = document.getElementById('options');
+      opts.innerHTML = '';
+      q.opts.forEach((o, i) => {
+        opts.innerHTML += `<button class="opt" onclick="pick(this,${i})">${o}</button>`;
+      });
+    }
+
+    function pick(btn, i) {
+      if (answered) return;
+      answered = true;
+      const correct = qs[cur].ans;
+      document.querySelectorAll('.opt').forEach((b, idx) => {
+        b.disabled = true;
+        if (idx === correct) b.classList.add('correct');
+      });
+      if (i === correct) {
+        score++;
+        btn.classList.add('correct');
+        document.getElementById('feedback').textContent = '✅ Correct! You know me so well 💕';
+      } else {
+        btn.classList.add('wrong');
+        document.getElementById('feedback').textContent = '❌ Not quite — but I still love you 😂';
+      }
+      document.getElementById('next-btn').style.display = 'inline-block';
+    }
+
+    function nextQ() {
+      cur++;
+      if (cur < qs.length) { load(); }
+      else { showResult(); }
+    }
+
+    function showResult() {
+      document.getElementById('quiz-area').style.display = 'none';
+      const res = document.getElementById('result');
+      res.style.display = 'block';
+      const pct = score / qs.length;
+      document.getElementById('res-score').textContent = `${score} / ${qs.length}`;
+      const msgs = [
+        ["😅", "Hmm… we need to hang out more! But I love you anyway 💜"],
+        ["😊", "Not bad! You know me pretty well 🌸"],
+        ["🥳", "Wow!! You really know me — best friend certified! 💕🎉"],
+      ];
+      const m = pct < 0.5 ? msgs[0] : pct < 0.85 ? msgs[1] : msgs[2];
+      document.getElementById('res-emoji').textContent = m[0];
+      document.getElementById('res-msg').textContent = m[1];
+    }
+
+    function restart() {
+      cur = 0; score = 0;
+      document.getElementById('result').style.display = 'none';
+      document.getElementById('quiz-area').style.display = 'block';
+      load();
+    }
+
+    load();
+  </script>
+</body>
+</html>
