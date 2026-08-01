@@ -394,6 +394,10 @@
     function go(id) {
       document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
       document.getElementById(id).classList.add('active');
+      const noBtn = document.getElementById('noBtn');
+      noBtn.style.position = 'relative';
+      noBtn.style.left = 'auto';
+      noBtn.style.top = 'auto';
     }
 
     // "no" button runs away on hover
@@ -401,10 +405,11 @@
     function runAway() {
       if (running) return; running = true;
       const btn = document.getElementById('noBtn');
-      const maxX = window.innerWidth - 120, maxY = window.innerHeight - 60;
+      const maxX = window.innerWidth - 140, maxY = window.innerHeight - 80;
       btn.style.position = 'fixed';
-      btn.style.left = Math.random() * maxX + 'px';
-      btn.style.top  = Math.random() * maxY + 'px';
+      btn.style.zIndex = '9999';
+      btn.style.left = Math.max(10, Math.random() * maxX) + 'px';
+      btn.style.top  = Math.max(10, Math.random() * maxY) + 'px';
       setTimeout(() => { running = false; }, 600);
     }
 
