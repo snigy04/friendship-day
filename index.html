@@ -42,8 +42,8 @@
     .card {
       background: #fdf0f3;
       border-radius: 4px;
-      padding: 44px 48px 52px;
-      max-width: 480px; width: 90%;
+      padding: 36px 28px 48px;
+      max-width: 480px; width: 94%;
       position: relative;
       box-shadow: 0 6px 32px rgba(160,40,60,0.13);
       text-align: center;
@@ -66,41 +66,43 @@
     /* ── TYPOGRAPHY ── */
     .big-text {
       font-family: 'Caveat', cursive;
-      font-size: clamp(2rem, 6vw, 3rem);
+      font-size: 2.6rem;
       color: #b5334a;
       line-height: 1.3;
-      margin-bottom: 28px;
+      margin-bottom: 24px;
     }
     .small-tag {
       font-family: 'Caveat', cursive;
-      font-size: 1rem; color: #c0607a;
+      font-size: 1.2rem; color: #c0607a;
       margin-bottom: 10px; letter-spacing: 1px;
     }
 
     /* ── STICKER ── */
-    .sticker {
-      font-size: 5rem;
+    .sticker-img {
+      height: 130px;
       margin: 8px 0 16px;
       filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
       animation: wiggle 3s ease-in-out infinite;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
     }
     @keyframes wiggle {
       0%,100%{transform:rotate(-4deg);}
       50%{transform:rotate(4deg);}
     }
-    .sticker2 { animation-delay: -1.5s; }
 
     /* ── BUTTONS ── */
-    .btn-row { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-top: 8px; }
+    .btn-row { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-top: 16px; }
 
     .btn {
       font-family: 'Caveat', cursive;
-      font-size: 1.3rem;
+      font-size: 1.5rem;
       background: #fdf0f3;
       color: #b5334a;
       border: 2px solid #d4849a;
       border-radius: 6px;
-      padding: 8px 32px;
+      padding: 12px 36px;
       cursor: pointer;
       box-shadow: 3px 3px 0 #d4849a;
       transition: transform 0.15s, box-shadow 0.15s;
@@ -236,35 +238,23 @@
       text-align: center; margin-top: 6px;
     }
 
-    /* ── MOBILE ── */
-    @media (max-width: 600px) {
+    /* ── DESKTOP scale up ── */
+    @media (min-width: 600px) {
+      .card { padding: 44px 48px 52px; }
+      .big-text { font-size: 3rem; }
+      .btn { font-size: 1.3rem; padding: 8px 32px; }
+    }
+
+    /* ── MOBILE fixes ── */
+    @media (max-width: 599px) {
       body { overflow-y: auto; align-items: flex-start; }
-      .screen { justify-content: flex-start; padding: 50px 0 50px; min-height: 100dvh; }
-      .flower { font-size: 3.5rem; top: 8px; right: 10px; }
-      .card { padding: 36px 24px 48px; width: 94%; max-width: 100% !important; }
-      .big-text { font-size: 2.6rem !important; margin-bottom: 20px; line-height: 1.25; }
-      .small-tag { font-size: 1.2rem; }
-      .btn { font-size: 1.5rem; padding: 14px 36px; }
-      .btn-row { gap: 14px; margin-top: 16px; }
-      img[src*="stickers"] { height: 130px !important; }
-      /* envelopes screen */
-      .env-grid { gap: 16px; }
-      .envelope { width: 110px !important; height: 80px !important; }
-      .envelope::before { border-left-width: 55px !important; border-right-width: 55px !important; border-top-width: 32px !important; }
-      .envelope::after { border-left-width: 55px !important; border-right-width: 55px !important; border-bottom-width: 32px !important; }
-      .env-tag { font-size: 0.85rem !important; padding: 3px 8px; }
-      /* photos screen */
-      .photo-grid { gap: 12px; }
-      .polaroid { padding: 8px 8px 26px; }
-      .polaroid-label { font-size: 1rem; }
-      /* final letter */
+      .screen { justify-content: flex-start; padding: 48px 0 48px; min-height: 100dvh; }
+      .flower { font-size: 3rem; top: 8px; right: 10px; }
+      img[src*="stickers"] { height: 120px !important; }
       .final-letter { padding: 36px 24px 48px; width: 94%; }
-      .final-letter p { font-size: 1.4rem; }
-      .final-letter .sign { font-size: 1.6rem; }
-      /* popup */
-      .msg-box { padding: 32px 24px; width: 92%; }
-      .msg-title { font-size: 1.3rem; }
-      .msg-text { font-size: 1.5rem; }
+      .final-letter p { font-size: 1.35rem; }
+      .msg-box { padding: 32px 22px; width: 92%; }
+      .msg-text { font-size: 1.4rem; }
       .msg-close { font-size: 1.3rem; padding: 10px 28px; }
     }
 
@@ -282,7 +272,7 @@
     <div class="card">
       <div class="small-tag">psst, Haru...</div>
       <div class="big-text">I made<br/>something for<br/>you 🎀</div>
-      <img src="stickers/images (1).jpeg" style="height:110px;margin:8px 0 16px;filter:drop-shadow(0 4px 8px rgba(0,0,0,0.1));animation:wiggle 3s ease-in-out infinite;"/>
+      <img src="stickers/images (1).jpeg" class="sticker-img"/>
       <div class="btn-row">
         <button class="btn" onclick="go('s2')">what?</button>
       </div>
@@ -293,7 +283,7 @@
   <div class="screen" id="s2">
     <div class="card">
       <div class="big-text">Will you<br/>see it? 🥺</div>
-      <img src="stickers/059f616cdb587d2d2d48bb88ae9a7365.jpg" style="height:110px;margin:8px 0 16px;filter:drop-shadow(0 4px 8px rgba(0,0,0,0.1));animation:wiggle 3s ease-in-out infinite;animation-delay:-1.5s;"/>
+      <img src="stickers/059f616cdb587d2d2d48bb88ae9a7365.jpg" class="sticker-img"/>
       <div class="btn-row">
         <button class="btn" onclick="go('s4')">yes</button>
         <button class="btn no-btn" id="noBtn" onmouseover="runAway()" ontouchstart="runAway()" onclick="go('s3')">no</button>
@@ -305,7 +295,7 @@
   <div class="screen" id="s3">
     <div class="card">
       <div class="big-text">please say<br/>yes! 🙏</div>
-      <img src="stickers/e1fb2a070b352ab435d5fdfba80f2761.jpg" style="height:110px;margin:8px 0 16px;filter:drop-shadow(0 4px 8px rgba(0,0,0,0.1));animation:wiggle 3s ease-in-out infinite;"/>
+      <img src="stickers/e1fb2a070b352ab435d5fdfba80f2761.jpg" class="sticker-img"/>
       <div class="btn-row">
         <button class="btn" onclick="go('s4')">fine 🙄</button>
       </div>
@@ -317,7 +307,7 @@
     <div class="card">
       <div class="small-tag">YAY! 🎉</div>
       <div class="big-text">are you ready<br/>for the<br/>surprise? 🎁</div>
-      <img src="stickers/7f700a8c103295f6add8efa3a858f595.jpg" style="height:110px;margin:8px 0 16px;filter:drop-shadow(0 4px 8px rgba(0,0,0,0.1));animation:wiggle 3s ease-in-out infinite;animation-delay:-1.5s;"/>
+      <img src="stickers/7f700a8c103295f6add8efa3a858f595.jpg" class="sticker-img"/>
       <div class="btn-row">
         <button class="btn" onclick="go('s5'); boom()">yes!!</button>
       </div>
@@ -326,9 +316,9 @@
 
   <!-- ── SCREEN 5 — ENVELOPES ── -->
   <div class="screen" id="s5">
-    <div class="card" style="padding:44px 52px 60px; max-width:660px;">
-      <div class="small-tag" style="font-size:1.3rem;">open each one 💌</div>
-      <div class="big-text" style="font-size:2.4rem; margin-bottom:24px;">little notes<br/>for you</div>
+    <div class="card" style="max-width:660px;">
+      <div class="small-tag">open each one 💌</div>
+      <div class="big-text">little notes<br/>for you</div>
       <div class="env-grid">
         <div class="env-wrap">
           <div class="envelope" style="width:130px;height:95px;" onclick="openMsg(this, 'reason to smile 🌸', 'You are the reason I smile on my worst days. No one gets me like you do.')">
@@ -362,16 +352,16 @@
         </div>
       </div>
       <div class="btn-row" style="margin-top:28px;">
-        <button class="btn" style="font-size:1.5rem; padding:10px 40px;" onclick="go('s5b')">one more thing →</button>
+        <button class="btn" onclick="go('s5b')">one more thing →</button>
       </div>
     </div>
   </div>
 
   <!-- ── SCREEN 5b — PHOTOS ── -->
   <div class="screen" id="s5b">
-    <div class="card" style="padding:36px 32px 52px;">
+    <div class="card">
       <div class="small-tag">us 📸</div>
-      <div class="big-text" style="font-size:1.8rem; margin-bottom:16px;">look how cute we are 💕</div>
+      <div class="big-text">look how cute we are 💕</div>
       <div class="photo-grid">
         <div class="polaroid" style="--r:-3deg">
           <img src="photos/photo1.jpeg" alt="memory"/>
